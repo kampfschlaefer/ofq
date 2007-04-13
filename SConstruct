@@ -77,7 +77,8 @@ conf = Configure( env, custom_tests={'CheckPKGConfig' : CheckPKGConfig }, conf_d
 #conf.CheckPKGConfig( 'lash-1.0', "0.5.1" )
 conf.CheckPKGConfig( 'QtCore', "4.2", True )
 conf.CheckPKGConfig( 'QtGui', "4.2", True )
-#conf.CheckPKGConfig( 'QtXml', "4.2", True )
+conf.CheckPKGConfig( 'QtNetwork', "4.2", True )
+conf.CheckPKGConfig( 'liblo', "0", True )
 
 env = conf.Finish()
 

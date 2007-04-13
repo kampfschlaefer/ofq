@@ -5,5 +5,5 @@ Import( 'env' )
 env = env.Copy()
 
 #env.AppendUnique( CPPPATH=["#/libcore"] )
-env.StaticLibrary( target="ofqf", source= ['ofqf.cpp'] )
+env.StaticLibrary( target="ofqf", source= ['ofqf.cpp','qoscclient.cpp','qosctypes.cpp'] )
 
