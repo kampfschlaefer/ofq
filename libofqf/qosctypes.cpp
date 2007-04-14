@@ -1,46 +1,71 @@
 
 #include "qosctypes.h"
+#include "qoscserver.h"
+#include "qoscclient.h"
 
 #include <QtCore/QByteArray>
 #include <QtCore/QString>
 #include <QtCore/QDebug>
+#include <QtNetwork/QUdpSocket>
 
-void fillQByteArrayUp( QByteArray& in ) {
+QOscBase::QOscBase( QObject* p )
+	: QObject( p )
+	, socket( new QUdpSocket( this ) )
+{
+}
+
+void QOscBase::fillQByteArrayUp( QByteArray& in ) {
 	while ( in.length() % 4 != 0 )
 		in.append( char( 0 ) );
 }
 
-QByteArray fromString( QString str ) {
-	QByteArray out = str.toUtf8();
-	while ( out.length() % 4 != 0 )
-		out.append( char( 0 ) );
-	return out;
-}
-
-QByteArray reverseQByteArray( QByteArray in ) {
+QByteArray QOscBase::reverseQByteArray( QByteArray in ) {
 	QByteArray out;
 	for ( int i=0; i<in.size(); ++i )
 		out.prepend( in[ i ] );
 	return out;
 }
 
-QByteArray fromInt32( qint32 i ) {
+QByteArray QOscBase::fromString( QString str ) {
+	QByteArray out = str.toUtf8();
+	while ( out.length() % 4 != 0 )
+		out.append( char( 0 ) );
+	return out;
+}
+QByteArray QOscBase::fromInt32( qint32 i ) {
 	QByteArray tmp( ( char* )static_cast<void*>( &i ), 4 );
 	return reverseQByteArray( tmp );
 }
-QByteArray fromDouble( float f ) {
+QByteArray QOscBase::fromFloat( float f ) {
 	QByteArray tmp( ( char* )static_cast<void*>( &f ), 4 );
 	return reverseQByteArray( tmp );
 }
+QString QOscBase::toString( const QByteArray& b ) {
+	//QByteArray tmp = b.left( b.indexOf( char( 0 ) ) );
+	//return QString( tmp );
+	return QString( b.data() );
+}
+qint32 QOscBase::toInt32( const QByteArray& b ) {
+	QByteArray tmp = b.left( 4 );
+	tmp = reverseQByteArray( tmp );
+	qint32* ret = ( qint32* )static_cast<void*>( tmp.data() );
+	return *ret;
+}
+float QOscBase::toFloat( const QByteArray& b ) {
+	QByteArray tmp = b.left( 4 );
+	tmp = reverseQByteArray( tmp );
+	float* ret = ( float* )static_cast<void*>( tmp.data() );
+	return *ret;
+}
 
-void oscMessageParseArgs( QVariant data, QString& argtypes, QByteArray& arguments ) {
+void QOscBase::oscMessageParseArgs( const QVariant& data, QString& argtypes, QByteArray& arguments ) {
 	if ( data.type() == QVariant::Int ) {
 		argtypes += "i";
 		arguments = arguments + fromInt32( data.toInt() );
 	}
 	if ( data.type() == QVariant::Double ) {
 		argtypes += "f";
-		arguments += fromDouble( data.toDouble() );
+		arguments += fromFloat( data.toDouble() );
 	}
 	if ( data.type() == QVariant::String ) {
 		argtypes += "s";
@@ -53,7 +78,7 @@ void oscMessageParseArgs( QVariant data, QString& argtypes, QByteArray& argument
 	}
 }
 
-QByteArray oscMessage( QString path, QVariant arg ) {
+QByteArray QOscBase::oscMessage( QString path, QVariant arg ) {
 	QString argtypes( "," );
 	QByteArray arguments;
 
@@ -64,4 +89,33 @@ QByteArray oscMessage( QString path, QVariant arg ) {
 	out.append( arguments );
 	return out;
 }
+
+
+PathObject::PathObject( QString path, QVariant::Type type, QOscClient* parent )
+	: QObject( parent )
+	, _path( path )
+	, _type( type )
+	, _client( parent )
+	, _server( 0 )
+{
+}
+PathObject::PathObject( QString path, QVariant::Type type, QOscServer* parent )
+	: QObject( parent )
+	, _path( path )
+	, _type( type )
+	, _client( 0 )
+	, _server( parent )
+{
+}
+PathObject::~PathObject() {
+}
+
+void PathObject::send( QVariant v ) {
+	if ( v.type() == _type && _client )
+		_client->sendData( _path, v );
+}
+void PathObject::send( int i ) { send( QVariant( i ) ); }
+void PathObject::send( QString s ) { send( QVariant( s ) ); }
+void PathObject::send( double d ) { send( QVariant( d ) ); }
+void PathObject::send() { send( QVariant() ); }
 

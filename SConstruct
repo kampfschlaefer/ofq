@@ -87,5 +87,5 @@ env = conf.Finish()
 
 
 ## target processing is done in the subdirectory
-env.SConscript( dirs=['libofqf','oscqlient'], exports="env" )
+env.SConscript( dirs=['libofqf','oscqlient','oscserver'], exports="env" )
 

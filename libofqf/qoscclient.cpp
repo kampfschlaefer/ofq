@@ -6,36 +6,27 @@
 #include <QtCore/QByteArray>
 #include <QtNetwork/QUdpSocket>
 
-#include "qosctypes.h"
-
 #include <lo/lo.h>
 
-class QOSCClient_Private
+QOscClient::QOscClient( const QHostAddress& address, quint16 port, QObject* p )
+	: QOscBase( p )
+	, _address( address )
+	, _port( port )
 {
-	friend class QOSCClient;
-
-	QUdpSocket* socket;
-	QHostAddress address;
-	quint16 port;
-};
-
-QOSCClient::QOSCClient( const QHostAddress& address, quint16 port, QObject* p )
-	: QObject( p )
-	, d( new QOSCClient_Private() )
-{
-	qDebug() << "QOSCClient::QOSCClient(" << address << "," << port << "," << p << ")";
-	d->socket = new QUdpSocket( this );
-	d->address = address;
-	d->port = port;
+	qDebug() << "QOscClient::QOscClient(" << address << "," << port << "," << p << ")";
 }
 
-QOSCClient::~QOSCClient() {
-	qDebug() << "QOSCClient::~QOSCClient()";
-	delete d;
+QOscClient::~QOscClient() {
+	qDebug() << "QOscClient::~QOscClient()";
 }
 
-void QOSCClient::sendData( QString path, QVariant data ) {
-	qDebug() << "QOSCClient::sendData(" << path << "," << data << ")";
+void QOscClient::setAddress( const QHostAddress& address, quint16 port ) {
+	_address = address;
+	_port = port;
+}
+
+void QOscClient::sendData( QString path, QVariant data ) {
+	qDebug() << "QOscClient::sendData(" << path << "," << data << ")";
 	/*QByteArray tmp = oscMessage( path, data );
 	qDebug() << " length:" << tmp.length();
 	d->socket->writeDatagram( tmp, d->address, d->port );*/
@@ -55,9 +46,9 @@ void QOSCClient::sendData( QString path, QVariant data ) {
 		qDebug() << "  byte" << i << "\t" << static_cast<quint8*>( chars )[ i ] /*<< "\"" << static_cast<char*>( chars )[ i ] << "\""*/ << "\t :" << quint8( out[ i ] ) << "\t\"" << out[ i ] << "\"";
 	}
 	//QByteArray out( static_cast<char*>( chars ), charsize );
-	d->socket->writeDatagram( out, d->address, d->port );
+	socket->writeDatagram( out, _address, _port );
 }
-void QOSCClient::sendData( QString path, QList<QVariant> data ) {
-	qDebug() << "QOSCClient::sendData(" << path << "," << data << ")";
+void QOscClient::sendData( QString path, QList<QVariant> data ) {
+	qDebug() << "QOscClient::sendData(" << path << "," << data << ")";
 }
 

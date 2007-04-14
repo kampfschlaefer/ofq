@@ -1,0 +1,15 @@
+#! /usr/bin/env python
+
+Import( 'env' )
+
+env = env.Copy()
+
+env.AppendUnique( CPPPATH=[ "#/libofqf" ] )
+#env.AppendUnique( CPPPATH=env['jack_CFLAGS'] )
+#env.AppendUnique( CPPPATH=env['lash10_CFLAGS'] )
+env.AppendUnique( LIBPATH=[ "#/libofqf" ] )
+#env.AppendUnique( LIBPATH=env['jack_PATHS'] )
+#env.AppendUnique( LIBPATH=env['lash10_PATHS'] )
+env.AppendUnique( LIBS=[ "ofqf" ] )
+env.Program( target="oscserver", source=["main.cpp"] )
+
