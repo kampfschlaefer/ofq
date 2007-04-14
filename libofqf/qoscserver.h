@@ -19,6 +19,7 @@
 class QOscServer : public QOscBase
 {
 	Q_OBJECT
+	friend class PathObject;
 	public:
 		/**
 		 * Creates an OSC-server that listens on all interfaces on the specified
@@ -39,6 +40,10 @@ class QOscServer : public QOscBase
 	private slots:
 		void readyRead();
 	private:
+
+		void registerPathObject( PathObject* );
+		void unregisterPathObject( PathObject* );
+		QList<PathObject*> paths;
 };
 
 #endif // QOSCSERVER_H

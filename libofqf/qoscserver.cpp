@@ -2,6 +2,7 @@
 #include "qoscserver.h"
 
 #include <QtCore/QDebug>
+#include <QtCore/QRegExp>
 #include <QtNetwork/QUdpSocket>
 
 QOscServer::QOscServer( quint16 port, QObject* p )
@@ -20,6 +21,13 @@ QOscServer::QOscServer( QHostAddress address, quint16 port, QObject* p )
 
 QOscServer::~QOscServer() {
 	qDebug() << "QOscServer::~QOscServer()";
+}
+
+void QOscServer::registerPathObject( PathObject* p ) {
+	paths.push_back( p );
+}
+void QOscServer::unregisterPathObject( PathObject* p ) {
+	paths.removeAll( p );
 }
 
 #define BUFFERSIZE 255
@@ -84,6 +92,12 @@ void QOscServer::readyRead() {
 			}
 		}
 		qDebug() << "path seems to be" << path << "args are" << args << ":" << arguments;
+
+		QRegExp exp( path );
+		foreach( PathObject* obj, paths ) {
+			if ( exp.exactMatch( obj->_path ) )
+				obj->signalData( arguments );
+		}
 	}
 }
 

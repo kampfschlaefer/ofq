@@ -106,8 +106,11 @@ PathObject::PathObject( QString path, QVariant::Type type, QOscServer* parent )
 	, _client( 0 )
 	, _server( parent )
 {
+	_server->registerPathObject( this );
 }
 PathObject::~PathObject() {
+	if ( _server )
+		_server->unregisterPathObject( this );
 }
 
 void PathObject::send( QVariant v ) {
@@ -118,4 +121,14 @@ void PathObject::send( int i ) { send( QVariant( i ) ); }
 void PathObject::send( QString s ) { send( QVariant( s ) ); }
 void PathObject::send( double d ) { send( QVariant( d ) ); }
 void PathObject::send() { send( QVariant() ); }
+
+void PathObject::signalData( QVariant v ) {
+	qDebug() << "PathObject::signalData(" << v << ")";
+	if ( v.type() == _type ) {
+		if ( _type == QVariant::Invalid )
+			emit data();
+		else
+			emit data( v );
+	}
+}
 
