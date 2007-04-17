@@ -98,5 +98,5 @@ env['QT_UICCOM'] = [
 	CLVar('touch ${TARGETS[2]}') ]
 
 ## target processing is done in the subdirectory
-env.SConscript( dirs=['libofqf','oscqlient','oscserver'], exports="env" )
+env.SConscript( dirs=['libofqf','oscqlient','oscserver','qtuiobleep'], exports="env" )
 
