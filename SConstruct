@@ -24,6 +24,7 @@ if env['QTDIR'].find( '3' ) >= 0:
 	env['QT_CPPPATH'] = "";
 	env['QT_LIB'] = ""
 
+
 env.Replace( LIBS="" )
 env.Replace( LIBPATH="" )
 
@@ -85,6 +86,16 @@ env = conf.Finish()
 #env.Append( CPPPATH="./ " )
 
 
+from SCons.Util import *
+
+# Commands for the qt support ...
+# command to generate header, implementation and moc-file
+# from a .ui file
+# taken from /usr/lib/scons-0.96.94/SCons/Tool/qt.py
+env['QT_UICCOM'] = [
+	CLVar('$QT_UIC $QT_UICDECLFLAGS -o ${TARGETS[0]} $SOURCE'),
+	CLVar('touch ${TARGETS[1]} ') ,
+	CLVar('touch ${TARGETS[2]}') ]
 
 ## target processing is done in the subdirectory
 env.SConscript( dirs=['libofqf','oscqlient','oscserver'], exports="env" )
