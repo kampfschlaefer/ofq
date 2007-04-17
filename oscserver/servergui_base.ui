@@ -1,0 +1,161 @@
+<ui version="4.0" >
+ <class>ServerGui_Base</class>
+ <widget class="QWidget" name="ServerGui_Base" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>267</width>
+    <height>167</height>
+   </rect>
+  </property>
+  <property name="windowTitle" >
+   <string>OSC-Server</string>
+  </property>
+  <layout class="QGridLayout" >
+   <property name="margin" >
+    <number>5</number>
+   </property>
+   <property name="spacing" >
+    <number>5</number>
+   </property>
+   <item row="3" column="1" >
+    <layout class="QHBoxLayout" >
+     <property name="margin" >
+      <number>0</number>
+     </property>
+     <property name="spacing" >
+      <number>6</number>
+     </property>
+     <item>
+      <widget class="QSpinBox" name="spinbox2" >
+       <property name="maximum" >
+        <number>100000</number>
+       </property>
+       <property name="minimum" >
+        <number>-100000</number>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSpinBox" name="spinbox3" >
+       <property name="maximum" >
+        <number>100000</number>
+       </property>
+       <property name="minimum" >
+        <number>-100000</number>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="0" column="0" >
+    <widget class="QLabel" name="label" >
+     <property name="text" >
+      <string>/string</string>
+     </property>
+     <property name="buddy" >
+      <cstring>txtString</cstring>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0" >
+    <widget class="QLabel" name="label_2" >
+     <property name="text" >
+      <string>/int</string>
+     </property>
+     <property name="buddy" >
+      <cstring>integerSpinBox</cstring>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0" >
+    <widget class="QLabel" name="label_3" >
+     <property name="text" >
+      <string>/double</string>
+     </property>
+     <property name="buddy" >
+      <cstring>doubleSpinBox</cstring>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0" >
+    <widget class="QLabel" name="label_4" >
+     <property name="text" >
+      <string>/twoargs</string>
+     </property>
+     <property name="buddy" >
+      <cstring>spinbox2</cstring>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1" >
+    <widget class="QSpinBox" name="integerSpinBox" >
+     <property name="maximum" >
+      <number>100000</number>
+     </property>
+     <property name="minimum" >
+      <number>-100000</number>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1" >
+    <widget class="QDoubleSpinBox" name="doubleSpinBox" >
+     <property name="maximum" >
+      <double>100000.000000000000000</double>
+     </property>
+     <property name="minimum" >
+      <double>-100000.000000000000000</double>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1" >
+    <widget class="QLineEdit" name="txtString" />
+   </item>
+   <item row="5" column="0" colspan="2" >
+    <widget class="QDialogButtonBox" name="buttonBox" >
+     <property name="orientation" >
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons" >
+      <set>QDialogButtonBox::Close|QDialogButtonBox::NoButton|QDialogButtonBox::Reset</set>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0" colspan="2" >
+    <widget class="Line" name="line" >
+     <property name="orientation" >
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <tabstops>
+  <tabstop>buttonBox</tabstop>
+  <tabstop>txtString</tabstop>
+  <tabstop>integerSpinBox</tabstop>
+  <tabstop>doubleSpinBox</tabstop>
+  <tabstop>spinbox2</tabstop>
+  <tabstop>spinbox3</tabstop>
+ </tabstops>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>ServerGui_Base</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>213</x>
+     <y>140</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>213</x>
+     <y>78</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

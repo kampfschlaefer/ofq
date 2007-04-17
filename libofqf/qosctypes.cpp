@@ -10,9 +10,25 @@
 
 QOscBase::QOscBase( QObject* p )
 	: QObject( p )
-	, socket( new QUdpSocket( this ) )
+	, _socket( 0 )
 {
+	setSocket( 0 );
 }
+
+void QOscBase::setSocket( QUdpSocket* s ) {
+	if ( _socket ) {
+		delete _socket;
+		_socket = 0;
+	}
+
+	if ( !_socket ) {
+		if ( s )
+			_socket = s;
+		else
+			_socket = new QUdpSocket( this );
+	}
+}
+QUdpSocket* QOscBase::socket() const { return _socket; }
 
 void QOscBase::fillQByteArrayUp( QByteArray& in ) {
 	while ( in.length() % 4 != 0 )
@@ -28,6 +44,7 @@ QByteArray QOscBase::reverseQByteArray( QByteArray in ) {
 
 QByteArray QOscBase::fromString( QString str ) {
 	QByteArray out = str.toUtf8();
+	out.append( char( 0 ) );
 	while ( out.length() % 4 != 0 )
 		out.append( char( 0 ) );
 	return out;
@@ -127,8 +144,13 @@ void PathObject::signalData( QVariant v ) {
 	if ( v.type() == _type ) {
 		if ( _type == QVariant::Invalid )
 			emit data();
-		else
-			emit data( v );
+		if ( _type == QVariant::Int )
+			emit data( v.toInt() );
+		if ( _type == QVariant::Double )
+			emit data( v.toDouble() );
+		if ( _type == QVariant::String )
+			emit data( v.toString() );
+		emit data( v );
 	}
 }
 

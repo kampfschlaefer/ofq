@@ -11,5 +11,5 @@ env.AppendUnique( LIBPATH=[ "#/libofqf" ] )
 #env.AppendUnique( LIBPATH=env['jack_PATHS'] )
 #env.AppendUnique( LIBPATH=env['lash10_PATHS'] )
 env.AppendUnique( LIBS=[ "ofqf" ] )
-env.Program( target="oscserver", source=["main.cpp"] )
+env.Program( target="oscserver", source=["main.cpp","servergui_base.ui"] )
 

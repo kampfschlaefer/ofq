@@ -41,11 +41,11 @@ void QOscClient::sendData( QString path, QVariant data ) {
 	qDebug() << " own message has size" << out.size();
 	//for ( int i=0; i<qMax( int( charsize ), out.size() ); ++i )
 	//	qDebug() << "  byte" << i << "\t" << static_cast<quint8*>( chars )[ i ] /*<< "\"" << static_cast<char*>( chars )[ i ] << "\""*/ << "\t :" << quint8( out[ i ] ) << "\t\"" << out[ i ] << "\"";
-	socket->writeDatagram( out, _address, _port );
+	socket()->writeDatagram( out, _address, _port );
 }
 void QOscClient::sendData( QString path, QList<QVariant> data ) {
 	qDebug() << "QOscClient::sendData(" << path << "," << data << ")";
 	QByteArray out = oscMessage( path, data );
-	socket->writeDatagram( out, _address, _port );
+	socket()->writeDatagram( out, _address, _port );
 }
 

@@ -9,14 +9,15 @@ QOscServer::QOscServer( quint16 port, QObject* p )
 	: QOscBase( p )
 {
 	qDebug() << "QOscServer::QOscServer(" << port << "," << p << ")";
-	socket->bind( QHostAddress::Any, port );
-	connect( socket, SIGNAL( readyRead() ), this, SLOT( readyRead() ) );
+	qDebug() << " socket() gives" << socket();
+	socket()->bind( QHostAddress::Any, port );
+	connect( socket(), SIGNAL( readyRead() ), this, SLOT( readyRead() ) );
 }
 QOscServer::QOscServer( QHostAddress address, quint16 port, QObject* p )
 	: QOscBase( p )
 {
 	qDebug() << "QOscServer::QOscServer(" << address << "," << port << "," << p << ")";
-	socket->bind( address, port );
+	socket()->bind( address, port );
 }
 
 QOscServer::~QOscServer() {
@@ -34,10 +35,10 @@ void QOscServer::unregisterPathObject( PathObject* p ) {
 
 void QOscServer::readyRead() {
 	qDebug() << "QOscServer::readyRead()";
-	while ( socket->hasPendingDatagrams() ) {
+	while ( socket()->hasPendingDatagrams() ) {
 		QByteArray data( BUFFERSIZE, char( 0 ) );
 		//data.resize( BUFFERSIZE );
-		int size = socket->readDatagram( data.data(), BUFFERSIZE );
+		int size = socket()->readDatagram( data.data(), BUFFERSIZE );
 		qDebug() << " read" << size << "(" << data.size() << ") bytes:" << data;
 
 		//for ( int i=0; i<size; ++i )

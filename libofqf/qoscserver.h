@@ -34,6 +34,11 @@ class QOscServer : public QOscBase
 		/// destructor
 		~QOscServer();
 
+		/**
+		 * @brief Don't allow changing the socket.
+		 */
+		void setSocket( QUdpSocket* ) {}
+
 	signals:
 		void data( QString path, QVariant data );
 

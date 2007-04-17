@@ -32,7 +32,11 @@ class QOscBase : public QObject
 		static void oscMessageParseArgs( const QVariant&, QString&, QByteArray& );
 		static QByteArray oscMessage( QString path, QVariant );
 
-		QUdpSocket* socket;
+		virtual void setSocket( QUdpSocket* );
+		QUdpSocket* socket() const;
+
+	private:
+		QUdpSocket* _socket;
 };
 
 class QOscClient;
@@ -68,6 +72,9 @@ class PathObject : public QObject
 		 * @brief signal incoming data
 		 */
 		void data( QVariant );
+		void data( int );
+		void data( double );
+		void data( QString );
 		void data();
 		// @}
 	private:
