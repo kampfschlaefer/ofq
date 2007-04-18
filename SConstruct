@@ -73,18 +73,29 @@ def CheckPKGConfig( context, pkgname, version="", all=False ):
 	context.Result( ret[0] )
 	return ret[0]
 
-conf = Configure( env, custom_tests={'CheckPKGConfig' : CheckPKGConfig }, conf_dir='cache', log_file='cache/config.log' )
-#conf.CheckPKGConfig( 'jack', "0.100.0" )
-#conf.CheckPKGConfig( 'lash-1.0', "0.5.1" )
+conf = Configure( env, custom_tests={'CheckPKGConfig' : CheckPKGConfig }, conf_dir='.cache', log_file='.cache/config.log' )
 conf.CheckPKGConfig( 'QtCore', "4.2", True )
 conf.CheckPKGConfig( 'QtGui', "4.2", True )
 conf.CheckPKGConfig( 'QtNetwork', "4.2", True )
-conf.CheckPKGConfig( 'liblo', "0", True )
+#conf.CheckPKGConfig( 'liblo', "0", True )
 
 env = conf.Finish()
 
-#env.Append( CPPPATH="./ " )
+env['PREFIX'] = ARGUMENTS.get('PREFIX', '/usr/local')
 
+if not env.has_key('PREFIX'):
+	print "No Prefix set! Will assume /usr/local. To change it use 'scons PREFIX=...'"
+	env['PREFIX'] = '/usr/local'
+
+env['PREFIX_LIB'] = env['PREFIX'] + "/lib"
+env['PREFIX_BIN'] = env['PREFIX'] + "/bin"
+
+env.Alias( 'install', env['PREFIX_LIB'] )
+env.Alias( 'install', env['PREFIX_BIN'] )
+
+#print env['PREFIX']
+#print env['PREFIX_LIB']
+#print env['PREFIX_BIN']
 
 from SCons.Util import *
 

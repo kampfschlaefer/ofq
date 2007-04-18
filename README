@@ -1,0 +1,11 @@
+This is the first public release of ofqf (OSC for Qt4).
+
+The directories contain:
+
+libofqf - The lib itself.
+
+oscqlient - A demo OSC client
+oscserver - The corresponding demo OSC server
+
+qtuiobleep - A demo frontend for tuiobleep
+

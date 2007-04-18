@@ -4,6 +4,9 @@ Import( 'env' )
 
 env = env.Copy()
 
-#env.AppendUnique( CPPPATH=["#/libcore"] )
-env.StaticLibrary( target="ofqf", source= ['ofqf.cpp','qoscclient.cpp','qosctypes.cpp','qoscserver.cpp'] )
+libofqf = env.SharedLibrary( target="ofqf", source= ['qoscclient.cpp','qosctypes.cpp','qoscserver.cpp'] )
+
+env.InstallAs( env['PREFIX_LIB']+ '/libofqf.so.0.1', libofqf )
+env.InstallAs( env['PREFIX_LIB']+ '/libofqf.so.0', libofqf )
+env.InstallAs( env['PREFIX_LIB']+ '/libofqf.so', libofqf )
 
