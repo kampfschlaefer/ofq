@@ -1,23 +1,7 @@
 #! /usr/bin/env python
 
-"""
-help       -> scons -h
-compile    -> scons
-clean      -> scons -c
-install    -> scons install
-uninstall  -> scons -c install
-configure  -> scons configure prefix=/tmp/ita
-
-Run from a subdirectory -> scons -u
-The variables are saved automatically after the first run
-"""
-
-###################################################################
-# LOAD THE ENVIRONMENT AND SET UP THE TOOLS
-###################################################################
-
 ## Load the builders in config
-env = Environment( tools=['default', 'qt' ] )
+env = Environment( tools=['default', 'qt', 'scanreplace' ], toolpath = ['.'] )
 
 if env['QTDIR'].find( '3' ) >= 0:
 	env['QTDIR'] = "/usr"
@@ -28,6 +12,7 @@ if env['QTDIR'].find( '3' ) >= 0:
 env.Replace( LIBS="" )
 env.Replace( LIBPATH="" )
 
+# DEBUG:
 env['CXXFLAGS']+="-Wall -Werror -g -fpic"
 
 def CheckPKGConfig( context, pkgname, version="", all=False ):
@@ -87,15 +72,13 @@ if not env.has_key('PREFIX'):
 	print "No Prefix set! Will assume /usr/local. To change it use 'scons PREFIX=...'"
 	env['PREFIX'] = '/usr/local'
 
-env['PREFIX_LIB'] = env['PREFIX'] + "/lib"
 env['PREFIX_BIN'] = env['PREFIX'] + "/bin"
+env['PREFIX_LIB'] = env['PREFIX'] + "/lib"
+env['PREFIX_INC'] = env['PREFIX'] + "/include/ofqf"
 
-env.Alias( 'install', env['PREFIX_LIB'] )
 env.Alias( 'install', env['PREFIX_BIN'] )
-
-#print env['PREFIX']
-#print env['PREFIX_LIB']
-#print env['PREFIX_BIN']
+env.Alias( 'install', env['PREFIX_LIB'] )
+env.Alias( 'install', env['PREFIX_INC'] )
 
 from SCons.Util import *
 
@@ -110,4 +93,7 @@ env['QT_UICCOM'] = [
 
 ## target processing is done in the subdirectory
 env.SConscript( dirs=['libofqf','oscqlient','oscserver','qtuiobleep'], exports="env" )
+
+pkgconfig = env.ScanReplace('ofqf.pc.in')
+env.Install( env['PREFIX_LIB'] + '/pkg-config', pkgconfig )
 
