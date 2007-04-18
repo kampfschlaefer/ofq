@@ -12,6 +12,9 @@
 
 class QUdpSocket;
 
+/**
+ * @internal
+ */
 class QOscBase : public QObject
 {
 	Q_OBJECT
@@ -43,8 +46,8 @@ class QOscClient;
 class QOscServer;
 
 /**
+ * @brief Connect osc-messages with QObjects
  */
-
 class PathObject : public QObject
 {
 	Q_OBJECT
@@ -55,16 +58,16 @@ class PathObject : public QObject
 		~PathObject();
 
 	public slots:
-		// @{
 		/**
 		 * @brief send outgoing data
 		 */
+		//@{
 		void send( QVariant );
 		void send( int );
 		void send( QString );
 		void send( double );
 		void send();
-		// @}
+		//@}
 
 	signals:
 		// @{
