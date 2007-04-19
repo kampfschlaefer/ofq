@@ -22,7 +22,6 @@
 
 #include <QtCore/QByteArray>
 #include <QtCore/QString>
-#include <QtCore/QDebug>
 #include <QtNetwork/QUdpSocket>
 
 QOscBase::QOscBase( QObject* p )
@@ -75,8 +74,6 @@ QByteArray QOscBase::fromFloat( float f ) {
 	return reverseQByteArray( tmp );
 }
 QString QOscBase::toString( const QByteArray& b ) {
-	//QByteArray tmp = b.left( b.indexOf( char( 0 ) ) );
-	//return QString( tmp );
 	return QString( b.data() );
 }
 qint32 QOscBase::toInt32( const QByteArray& b ) {
@@ -157,7 +154,6 @@ void PathObject::send( double d ) { send( QVariant( d ) ); }
 void PathObject::send() { send( QVariant() ); }
 
 void PathObject::signalData( QVariant v ) {
-	qDebug() << "PathObject::signalData(" << v << ")";
 	if ( v.type() == _type ) {
 		if ( _type == QVariant::Invalid )
 			emit data();

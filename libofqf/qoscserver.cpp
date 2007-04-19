@@ -18,27 +18,27 @@
 
 #include "qoscserver.h"
 
-#include <QtCore/QDebug>
+//#include <QtCore/QDebug>
 #include <QtCore/QRegExp>
 #include <QtNetwork/QUdpSocket>
 
 QOscServer::QOscServer( quint16 port, QObject* p )
 	: QOscBase( p )
 {
-	qDebug() << "QOscServer::QOscServer(" << port << "," << p << ")";
-	qDebug() << " socket() gives" << socket();
+	//qDebug() << "QOscServer::QOscServer(" << port << "," << p << ")";
+	//qDebug() << " socket() gives" << socket();
 	socket()->bind( QHostAddress::Any, port );
 	connect( socket(), SIGNAL( readyRead() ), this, SLOT( readyRead() ) );
 }
 QOscServer::QOscServer( QHostAddress address, quint16 port, QObject* p )
 	: QOscBase( p )
 {
-	qDebug() << "QOscServer::QOscServer(" << address << "," << port << "," << p << ")";
+	//qDebug() << "QOscServer::QOscServer(" << address << "," << port << "," << p << ")";
 	socket()->bind( address, port );
 }
 
 QOscServer::~QOscServer() {
-	qDebug() << "QOscServer::~QOscServer()";
+	//qDebug() << "QOscServer::~QOscServer()";
 }
 
 void QOscServer::registerPathObject( PathObject* p ) {
@@ -51,15 +51,12 @@ void QOscServer::unregisterPathObject( PathObject* p ) {
 #define BUFFERSIZE 255
 
 void QOscServer::readyRead() {
-	qDebug() << "QOscServer::readyRead()";
+	//qDebug() << "QOscServer::readyRead()";
 	while ( socket()->hasPendingDatagrams() ) {
 		QByteArray data( BUFFERSIZE, char( 0 ) );
-		//data.resize( BUFFERSIZE );
 		int size = socket()->readDatagram( data.data(), BUFFERSIZE );
-		qDebug() << " read" << size << "(" << data.size() << ") bytes:" << data;
+		//qDebug() << " read" << size << "(" << data.size() << ") bytes:" << data;
 
-		//for ( int i=0; i<size; ++i )
-		//	qDebug() << i << "\t" << static_cast<quint8*>( static_cast<void*>( data.data() ) )[ i ];
 		QString path;
 		QString args;
 		QVariant arguments;
@@ -109,7 +106,7 @@ void QOscServer::readyRead() {
 					arguments = list;
 			}
 		}
-		qDebug() << "path seems to be" << path << "args are" << args << ":" << arguments;
+		//qDebug() << "path seems to be" << path << "args are" << args << ":" << arguments;
 
 		QMap<QString,QString> replacements;
 		replacements[ "!" ] = "^";
@@ -122,7 +119,7 @@ void QOscServer::readyRead() {
 		foreach( QString rep, replacements.keys() )
 			path.replace( rep, replacements[ rep ] );
 
-		qDebug() << " after transformation to OSC-RegExp path is" << path;
+		//qDebug() << " after transformation to OSC-RegExp path is" << path;
 
 		QRegExp exp( path );
 		foreach( PathObject* obj, paths ) {

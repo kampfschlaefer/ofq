@@ -13,7 +13,9 @@ env.Replace( LIBS="" )
 env.Replace( LIBPATH="" )
 
 # DEBUG:
-env['CXXFLAGS']+="-Wall -Werror -g -fpic"
+#env['CXXFLAGS']+="-Wall -Werror -g -fpic"
+# RELEASE:
+env['CXXFLAGS']+="-fpic"
 
 def CheckPKGConfig( context, pkgname, version="", all=False ):
 	import SCons.Util, os, string
@@ -62,7 +64,6 @@ conf = Configure( env, custom_tests={'CheckPKGConfig' : CheckPKGConfig }, conf_d
 conf.CheckPKGConfig( 'QtCore', "4.2", True )
 conf.CheckPKGConfig( 'QtGui', "4.2", True )
 conf.CheckPKGConfig( 'QtNetwork', "4.2", True )
-#conf.CheckPKGConfig( 'liblo', "0", True )
 
 env = conf.Finish()
 
