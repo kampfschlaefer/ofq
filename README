@@ -9,3 +9,21 @@ oscserver - The corresponding demo OSC server
 
 qtuiobleep - A demo frontend for tuiobleep
 
+= Installation =
+
+Building the lib and the samples is done with calling "scons".
+
+If you want to install lib, headers and pkg-config-file you have to use
+"scons install" which installs by default to /usr/local.
+To select another prefix you have to use "scons install PREFIX=<dir>".
+
+To uninstall the installed files use "scons -c install" or, if you used
+your own prefix, "scons -c install PREFIX=<dir>".
+
+For bugs mail me: arnold@arnoldarts.de
+
+Check http://www.arnoldarts.de/drupal for updates and new versions.
+
+Have fun,
+
+Arnold Krille
