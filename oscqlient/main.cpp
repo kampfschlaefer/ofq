@@ -22,9 +22,9 @@ int main()
 {
 	QOscClient* c = new QOscClient( QHostAddress( QHostAddress::LocalHost ), 5282, 0 );
 
-	c->sendData( "/int", 305 );
+	c->sendData( "/?nt*", 305 );
 	c->sendData( "/double", 3E4+5E-2 );
-	c->sendData( "/string", "Bla!" );
+	c->sendData( "/{string*,text}", "Bla!" );
 
 	QList<QVariant> list;
 	list.push_back( 305 );

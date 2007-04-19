@@ -111,6 +111,19 @@ void QOscServer::readyRead() {
 		}
 		qDebug() << "path seems to be" << path << "args are" << args << ":" << arguments;
 
+		QMap<QString,QString> replacements;
+		replacements[ "!" ] = "^";
+		replacements[ "{" ] = "(";
+		replacements[ "}" ] = ")";
+		replacements[ "," ] = "|";
+		replacements[ "*" ] = ".*";
+		replacements[ "?" ] = ".";
+
+		foreach( QString rep, replacements.keys() )
+			path.replace( rep, replacements[ rep ] );
+
+		qDebug() << " after transformation to OSC-RegExp path is" << path;
+
 		QRegExp exp( path );
 		foreach( PathObject* obj, paths ) {
 			if ( exp.exactMatch( obj->_path ) )
