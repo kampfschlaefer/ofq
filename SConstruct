@@ -62,7 +62,7 @@ def CheckPKGConfig( context, pkgname, version="", all=False ):
 
 conf = Configure( env, custom_tests={'CheckPKGConfig' : CheckPKGConfig }, conf_dir='.cache', log_file='.cache/config.log' )
 conf.CheckPKGConfig( 'QtCore', "4.2", True )
-conf.CheckPKGConfig( 'QtGui', "4.2", True )
+conf.CheckPKGConfig( 'QtGui', "4.2" )
 conf.CheckPKGConfig( 'QtNetwork', "4.2", True )
 
 env = conf.Finish()

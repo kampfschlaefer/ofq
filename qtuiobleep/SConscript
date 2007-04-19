@@ -10,6 +10,6 @@ env.AppendUnique( CPPPATH=[ "#/libofqf" ] )
 env.AppendUnique( LIBPATH=[ "#/libofqf" ] )
 #env.AppendUnique( LIBPATH=env['jack_PATHS'] )
 #env.AppendUnique( LIBPATH=env['lash10_PATHS'] )
-env.AppendUnique( LIBS=[ "ofqf" ] )
+env.AppendUnique( LIBS=[ "ofqf", env['QtGui_LIBS'] ] )
 env.Program( target="qtuiobleep", source=["main.cpp",'tuiobleep_gui.ui'] )
 
