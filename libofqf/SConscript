@@ -4,6 +4,8 @@ Import( 'env' )
 
 env = env.Copy()
 
+env.AppendUnique( CPPPATH=["."] )
+
 libofqf = env.SharedLibrary( target="ofqf", source= ['qoscclient.cpp','qosctypes.cpp','qoscserver.cpp'] )
 
 env.InstallAs( env['PREFIX_LIB']+ '/libofqf.so.0.1', libofqf )

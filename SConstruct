@@ -88,8 +88,8 @@ from SCons.Util import *
 # taken from /usr/lib/scons-0.96.94/SCons/Tool/qt.py
 env['QT_UICCOM'] = [
 	CLVar('$QT_UIC $QT_UICDECLFLAGS -o ${TARGETS[0]} $SOURCE'),
-	CLVar('touch ${TARGETS[1]} ') ,
-	CLVar('touch ${TARGETS[2]}') ]
+	CLVar('touch ${TARGETS[1]}'),
+	CLVar('touch ${TARGETS[2]}')]
 
 ## target processing is done in the subdirectory
 env.SConscript( dirs=['libofqf','oscqlient','oscserver','qtuiobleep'], exports="env" )
