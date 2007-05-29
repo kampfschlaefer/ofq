@@ -49,12 +49,39 @@ void BleepWidget::resizeEvent( QResizeEvent* ) {
 }
 
 void BleepWidget::paintEvent( QPaintEvent* ) {
+	double h = qMin( width()*0.8, height()*0.8 );
+	QPainterPath path;
+	path.moveTo( -h/4, h/2-1 );
+	path.lineTo( -h/4, 0 );
+	path.lineTo( 0, -h/2 );
+	path.lineTo( h/4, 0 );
+	path.lineTo( h/4, h/2-1 );
+	path.lineTo( -h/4, h/2-1 );
+
 	QPainter p( this );
+	p.setRenderHints( QPainter::Antialiasing );
+
 	p.translate( width()/2, height()/2 );
 	p.rotate( angle );
-	double h = qMin( width()*0.8, height()*0.8 );
-	p.fillRect( QRectF( -h/4, -h/2, h/2, h ), QColor( 255,150,0 ) );
-	setMask( p.worldMatrix().map( QRegion( int( -h/4 ), int( -h/2 ), int( h/2 ), int( h ) ) ) );
+
+	//p.fillRect( QRectF( -h/4, -h/2, h/2, h ), QColor( 255,150,0 ) );
+
+	p.setPen( Qt::NoPen );
+	p.setBrush( QColor( 255,150,0 ) );
+
+	p.drawPath( path );
+
+
+	QBitmap bitmap( this->size() );
+	bitmap.clear();
+	QPainter p2( &bitmap );
+	p2.translate( width()/2, height()/2 );
+	p2.rotate( angle );
+	p2.setBrush( QColor( 0,0,0 ) );
+	p2.drawPath( path );
+
+	if ( mask() != bitmap )
+		setMask( bitmap );
 }
 
 void BleepWidget::mouseMoveEvent( QMouseEvent* ev ) {
