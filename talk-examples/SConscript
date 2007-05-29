@@ -1,0 +1,13 @@
+#! /usr/bin/env python
+
+Import( 'env' )
+
+env = env.Copy()
+
+#env.AppendUnique( CPPPATH=[ "#/libofqf" ] )
+#env.AppendUnique( LIBPATH=[ "#/libofqf" ] )
+#env.AppendUnique( LIBS=[ "ofqf" ] )
+
+env.Program( target="01-simplebutton", source=["01-simplebutton.cpp"] )
+env.Program( target="02-simplebutton", source=["02-simplebutton.cpp"] )
+
