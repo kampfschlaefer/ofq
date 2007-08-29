@@ -96,5 +96,5 @@ env['QT_UICCOM'] = [
 env.SConscript( dirs=['libofqf','oscqlient','oscserver','qtuiobleep'], exports="env" )
 
 pkgconfig = env.ScanReplace('ofqf.pc.in')
-env.Install( env['PREFIX_LIB'] + '/pkg-config', pkgconfig )
+env.Install( env['PREFIX_LIB'] + '/pkgconfig', pkgconfig )
 
