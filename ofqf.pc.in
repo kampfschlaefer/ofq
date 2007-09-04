@@ -1,8 +1,8 @@
 # This is a comment
 prefix=$PREFIX   # this defines a variable
-exec_prefix=${prefix}  # defining another variable in terms of the first
-libdir=${exec_prefix}/lib
-includedir=${prefix}/include/ofqf
+exec_prefix=${PREFIX_BIN}  # defining another variable in terms of the first
+libdir=${PREFIX_LIB}
+includedir=${PREFIX_INC}
 
 Name: libofqf                            # human-readable name
 Description: Native OSC for Qt4 # human-readable description

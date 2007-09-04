@@ -8,8 +8,8 @@ env.AppendUnique( CPPPATH=["."] )
 
 libofqf = env.SharedLibrary( target="ofqf", source= ['qoscclient.cpp','qosctypes.cpp','qoscserver.cpp'] )
 
-env.InstallAs( env['PREFIX_LIB']+ '/libofqf.so.0.1', libofqf )
-env.InstallAs( env['PREFIX_LIB']+ '/libofqf.so.0', libofqf )
+#env.InstallAs( env['PREFIX_LIB']+ '/libofqf.so.0.1', libofqf )
+#env.InstallAs( env['PREFIX_LIB']+ '/libofqf.so.0', libofqf )
 env.InstallAs( env['PREFIX_LIB']+ '/libofqf.so', libofqf )
 
 env.Install( env['PREFIX_INC'], ['qoscclient.h','qoscserver.h','qosctypes.h'] )
