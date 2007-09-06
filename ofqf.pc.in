@@ -6,7 +6,7 @@ includedir=${PREFIX}/include/ofqf
 
 Name: libofqf                            # human-readable name
 Description: Native OSC for Qt4 # human-readable description
-Version: 0.1
+Version: 0.1.1
 URL: http://www.arnoldarts.de/drupal/?q=ofqf
 Requires: QtNetwork >= 4.2 QtCore >= 4.2
 #Conflicts: foobar <= 4.5
