@@ -69,9 +69,9 @@ env = conf.Finish()
 
 env['PREFIX'] = ARGUMENTS.get('PREFIX', '/usr/local')
 
-if not env.has_key('PREFIX'):
+if not ARGUMENTS.has_key('PREFIX'):
 	print """\
-No Prefix set! Will assume /usr/local. To change it use 'scons PREFIX=<path>'
+\nNo Prefix set! Will assume /usr/local. To change it use 'scons PREFIX=<path>'
 Note that <ou have to use this everytime as it is not cached currently.
 """
 	env['PREFIX'] = '/usr/local'
