@@ -96,7 +96,7 @@ env['QT_UICCOM'] = [
 	CLVar('touch ${TARGETS[2]}') ]
 
 ## target processing is done in the subdirectory
-env.SConscript( dirs=['libofqf','oscqlient','oscserver','qtuiobleep'], exports="env" )
+env.SConscript( dirs=['libofqf','oscqlient','oscserver'], exports="env" )
 
 pkgconfig = env.ScanReplace('ofqf.pc.in')
 env.Install( env['PREFIX_LIB'] + '/pkgconfig', pkgconfig )
