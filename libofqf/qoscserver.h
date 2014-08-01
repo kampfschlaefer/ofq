@@ -58,7 +58,7 @@ class QOscServer : public QOscBase
 		void setSocket( QUdpSocket* ) {}
 
 	signals:
-		void data( QString path, QVariant data );
+		void receive( QString & path, QVariant & data );
 
 	private slots:
 		void readyRead();
