@@ -13,7 +13,9 @@ env.Replace( LIBS="" )
 env.Replace( LIBPATH="" )
 
 # DEBUG:
-env['CXXFLAGS']+="-Wall -Werror -g -fpic"
+#env['CXXFLAGS']+="-Wall -Werror -g -fpic"
+# RELEASE:
+env['CXXFLAGS']+="-fpic"
 
 def CheckPKGConfig( context, pkgname, version="", all=False ):
 	import SCons.Util, os, string
@@ -60,16 +62,18 @@ def CheckPKGConfig( context, pkgname, version="", all=False ):
 
 conf = Configure( env, custom_tests={'CheckPKGConfig' : CheckPKGConfig }, conf_dir='.cache', log_file='.cache/config.log' )
 conf.CheckPKGConfig( 'QtCore', "4.2", True )
-conf.CheckPKGConfig( 'QtGui', "4.2", True )
+conf.CheckPKGConfig( 'QtGui', "4.2" )
 conf.CheckPKGConfig( 'QtNetwork', "4.2", True )
-#conf.CheckPKGConfig( 'liblo', "0", True )
 
 env = conf.Finish()
 
 env['PREFIX'] = ARGUMENTS.get('PREFIX', '/usr/local')
 
-if not env.has_key('PREFIX'):
-	print "No Prefix set! Will assume /usr/local. To change it use 'scons PREFIX=...'"
+if not ARGUMENTS.has_key('PREFIX'):
+	print """\
+\nNo Prefix set! Will assume /usr/local. To change it use 'scons PREFIX=<path>'
+Note that <ou have to use this everytime as it is not cached currently.
+"""
 	env['PREFIX'] = '/usr/local'
 
 env['PREFIX_BIN'] = env['PREFIX'] + "/bin"
@@ -92,7 +96,11 @@ env['QT_UICCOM'] = [
 	CLVar('touch ${TARGETS[2]}')]
 
 ## target processing is done in the subdirectory
+<<<<<<< HEAD
 env.SConscript( dirs=['libofqf','oscqlient','oscserver','qtuiobleep','talk-examples'], exports="env" )
+=======
+env.SConscript( dirs=['libofqf','oscqlient','oscserver'], exports="env" )
+>>>>>>> 2412c7ac0514b4bd324f537fd7a716127142df68
 
 pkgconfig = env.ScanReplace('ofqf.pc.in')
 env.Install( env['PREFIX_LIB'] + '/pkgconfig', pkgconfig )

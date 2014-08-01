@@ -1,12 +1,18 @@
 # This is a comment
 prefix=$PREFIX   # this defines a variable
+<<<<<<< HEAD
 exec_prefix=${PREFIX_BIN}  # defining another variable in terms of the first
 libdir=${PREFIX_LIB}
 includedir=${PREFIX_INC}
+=======
+exec_prefix=${PREFIX}  # defining another variable in terms of the first
+libdir=${PREFIX}/lib
+includedir=${PREFIX}/include/ofqf
+>>>>>>> 2412c7ac0514b4bd324f537fd7a716127142df68
 
 Name: libofqf                            # human-readable name
 Description: Native OSC for Qt4 # human-readable description
-Version: 0.1
+Version: 0.1.2
 URL: http://www.arnoldarts.de/drupal/?q=ofqf
 Requires: QtNetwork >= 4.2 QtCore >= 4.2
 #Conflicts: foobar <= 4.5
