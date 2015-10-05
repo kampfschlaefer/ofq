@@ -39,6 +39,12 @@ QOscServer::QOscServer( QHostAddress address, quint16 port, QObject* p )
 
 QOscServer::~QOscServer() {
 	qDebug() << "QOscServer::~QOscServer()";
+	// manually destroy child path objects here as they need to unregister themselves
+	// before `paths` gets destroyed at the end of this function
+	for (PathObject* pathObject : findChildren<PathObject*>("", Qt::FindDirectChildrenOnly))
+	{
+		delete pathObject;
+	}
 }
 
 void QOscServer::registerPathObject( PathObject* p ) {
