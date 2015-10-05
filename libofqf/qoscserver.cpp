@@ -39,6 +39,12 @@ QOscServer::QOscServer( QHostAddress address, quint16 port, QObject* p )
 
 QOscServer::~QOscServer() {
 	qDebug() << "QOscServer::~QOscServer()";
+	// manually destroy child path objects here as they need to unregister themselves
+	// before `paths` gets destroyed at the end of this function
+	for (PathObject* pathObject : findChildren<PathObject*>("", Qt::FindDirectChildrenOnly))
+	{
+		delete pathObject;
+	}
 }
 
 void QOscServer::registerPathObject( PathObject* p ) {
@@ -87,7 +93,8 @@ void QOscServer::readyRead() {
 					if ( type == 's' ) {
 						QString s = toString( tmp );
 						value = s;
-						i += s.size();
+						// string size plus one for the null terminator
+						i += s.size() + 1;
 					}
 					if ( type == 'i' ) {
 						value = toInt32( tmp );
